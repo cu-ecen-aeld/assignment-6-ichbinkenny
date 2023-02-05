@@ -23,9 +23,9 @@ FILES:${PN} += "${bindir}/aesdsocket"
 # (and remove comment)
 TARGET_LDFLAGS += "-pthread -lrt"
 
-inherit update-rd.d
-INITSCRIPT_NAME = "aesdsocket-start-stop.sh"
-INITSCRIPT_PARAMS = "defaults 89"
+inherit update-rc.d
+INITSCRIPT_PACKAGES = "${PN}"
+INITSCRIPT_NAME:${PN} = "aesdsocket-start-stop.sh"
 
 do_configure () {
 	:
@@ -45,6 +45,7 @@ do_install () {
 	# See example at https://github.com/cu-ecen-aeld/ecen5013-yocto/blob/ecen5013-hello-world/meta-ecen5013/recipes-ecen5013/ecen5013-hello-world/ecen5013-hello-world_git.bb
         install -d ${D}${bindir}
         install -m 0755 ${S}/aesdsocket ${D}${bindir}/
+
         install -d ${D}${sysconfdir}/init.d
-        install -m 0755 ${S}/aesdsocket-start-stop.sh ${D}${sysconfidir}/init.d
+        install -m 0755 ${S}/aesdsocket-start-stop.sh ${D}${sysconfdir}/init.d/aesdsocket-start-stop.sh
 }
